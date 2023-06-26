@@ -20,6 +20,15 @@ public class IntList {
     /**
      * A List with first FIRST0 and rest REST0.
      */
+
+    public static void main(String [] args) {
+        IntList L = new IntList(15, null);
+        L = new IntList(10, L);
+        L = new IntList(5, L);
+        IntList M = IntList.of(1, 2, 3);
+        System.out.println(dcatenate(L, M).size());
+    }
+
     public IntList(int first0, IntList rest0) {
         first = first0;
         rest = rest0;
@@ -29,13 +38,42 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
     /**
      * Returns a list equal to L with all elements squared. Destructive.
      */
+
+    public int size() {
+        // use recursion
+        if (rest == null) {
+            return 1;
+        }
+        return 1 + this.rest.size();
+    }
+
+
+    public int iterativeSize() {
+        // no recursion
+        IntList pointer = this;
+        int itemnumber = 0;
+        while (pointer != null) {
+            itemnumber = itemnumber + 1;
+            pointer = pointer.rest;
+        }
+        return itemnumber;
+    }
+
+    public int get(int i) {
+        // return the ith item of the list
+        if (i == 0) {
+            return first;
+        }
+        return rest.get(i - 1);
+    }
+
     public static void dSquareList(IntList L) {
 
         while (L != null) {
@@ -82,7 +120,21 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        IntList p = A;
+        while (p.rest != null) {
+            p = p.rest;
+        }
+        p.rest = B;
+
+        return A;
+
+//        if (A == null) {
+//            return B;
+//        } else {
+//            A.rest = dcatenate(A.rest, B);
+//            return A;
+//        }
+
     }
 
     /**
@@ -91,23 +143,24 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+
+        IntList ptr = A;
+        IntList L = new IntList(ptr.first, null);
+        IntList tail = L;
+        ptr = ptr.rest;
+
+        while (ptr != null) {
+            tail.rest = new IntList(ptr.first, null);
+            tail = tail.rest;
+            ptr = ptr.rest;
+        }
+
+        tail.rest = B;
+        return L;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * DO NOT MODIFY ANYTHING BELOW THIS LINE! Many of the concepts below here
