@@ -1,9 +1,9 @@
-public class ArrayDeque<Item> {
+public class ArrayDeque<T> {
 
     /**
      * array to save data.
      */
-    private Item[] items;
+    private T[] items;
     /**
      * size of the deque.
      */
@@ -17,7 +17,7 @@ public class ArrayDeque<Item> {
      * constructor for ArrayDeque.
      */
     public ArrayDeque() {
-        items = (Item[]) new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
         front = 0;
         last = 1;
@@ -34,7 +34,7 @@ public class ArrayDeque<Item> {
      * Resize the deque.
      */
     private void resize(int capacity) {
-        Item[] newDeque = (Item[]) new Object[capacity];
+        T[] newDeque = (T[]) new Object[capacity];
         int oldIndex = plusOne(front); // the index of the first item in original deque
         for (int newIndex = 0; newIndex < size; newIndex++) {
             newDeque[newIndex] = items[oldIndex];
@@ -70,7 +70,7 @@ public class ArrayDeque<Item> {
     }
 
     // Check if the deque is full.
-    public boolean isFull() {
+    private boolean isFull() {
         return size == items.length;
     }
 
@@ -100,7 +100,7 @@ public class ArrayDeque<Item> {
     /** add one item at the front of the deque.
      * @param item the item we want to add
      */
-    public void addFirst(Item item) {
+    public void addFirst(T item) {
         if (isFull()) {
             upSize();
         }
@@ -112,7 +112,7 @@ public class ArrayDeque<Item> {
     /** add one item at the end of the deque.
      * @param item item we want to add
      */
-    public void addLast(Item item) {
+    public void addLast(T item) {
         if (isFull()) {
             upSize();
         }
@@ -122,7 +122,7 @@ public class ArrayDeque<Item> {
     }
 
     // Removes and returns the item at the front of the deque. If no such item exists, returns null.
-    public Item removeFirst() {
+    public T removeFirst() {
         if (isSparse()) {
             downSize();
         }
@@ -131,7 +131,7 @@ public class ArrayDeque<Item> {
             return null;
         }
         front = plusOne(front);
-        Item head = items[front];
+        T head = items[front];
         items[front] = null;
         size--;
 
@@ -139,7 +139,7 @@ public class ArrayDeque<Item> {
     }
 
     // Removes and returns the item at the back of the deque. If no such item exists, returns null.
-    public Item removeLast() {
+    public T removeLast() {
         if (isSparse()) {
             downSize();
         }
@@ -148,7 +148,7 @@ public class ArrayDeque<Item> {
             return null;
         }
         last = minusOne(last);
-        Item tail = items[last];
+        T tail = items[last];
         items[last] = null;
         size--;
 
@@ -159,7 +159,7 @@ public class ArrayDeque<Item> {
      * where 0 is the front, 1 is the next item, and so forth.
      * If no such item exists, returns null. Must not alter the deque!
      */
-    public Item get(int index) {
+    public T get(int index) {
         if (index >= size) {
             return null;
         }
